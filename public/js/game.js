@@ -544,15 +544,8 @@ const UnoGame = {
     const myCount = this.hand.length;
     document.getElementById('game-my-username').innerText = `${this.myUsername} (You) • ${myCount} card${myCount !== 1 ? 's' : ''}`;
 
-    // Update Live Standings widget
-    const standings = state.players.map((p, idx) => ({
-      username: p.username,
-      handCount: p.handCount,
-      active: idx === state.activePlayerIndex,
-      isMe: p.isMe
-    }));
-    this.updateLiveStandings(standings);
   },
+
 
   checkMultiplayerChallengeOpponents() {
     // Scans players to see if someone has 1 card left and didn't declare UNO, allowing a quick challenge!
@@ -695,14 +688,6 @@ const UnoGame = {
     const myCount = this.hand.length;
     document.getElementById('game-my-username').innerText = `${this.myUsername} (You) • ${myCount} card${myCount !== 1 ? 's' : ''}`;
 
-    // Update Live Standings widget
-    const standings = state.players.map((p, idx) => ({
-      username: p.name,
-      handCount: p.hand.length,
-      active: idx === state.activeIdx,
-      isMe: idx === 0
-    }));
-    this.updateLiveStandings(standings);
 
     // If active player is a bot, trigger its turn!
     if (!this.isMyTurn) {
@@ -1185,39 +1170,6 @@ const UnoGame = {
     dotEl.className = `color-dot ${color}`;
   },
 
-  updateLiveStandings(standings) {
-    const listEl = document.getElementById('live-standings-list');
-    if (!listEl) return;
-    listEl.innerHTML = '';
-
-    standings.forEach(p => {
-      const row = document.createElement('div');
-      row.className = p.active ? 'standing-row active-player' : 'standing-row';
-
-      // Badge class based on card count
-      let badgeClass = 'many-cards';
-      let badgeText = `${p.handCount} card${p.handCount !== 1 ? 's' : ''}`;
-      
-      if (p.handCount === 1) {
-        badgeClass = 'uno-alert';
-        badgeText = '1 CARD (UNO!)';
-      } else if (p.handCount <= 3) {
-        badgeClass = 'low-cards';
-      }
-
-      const activeDot = p.active ? '<span class="standing-active-dot" title="Active Turn"></span>' : '';
-      const nameText = p.isMe ? 'You' : p.username;
-
-      row.innerHTML = `
-        <div class="standing-player-name">
-          ${activeDot}
-          <span>${nameText}</span>
-        </div>
-        <div class="standing-card-badge ${badgeClass}">${badgeText}</div>
-      `;
-      listEl.appendChild(row);
-    });
-  },
 
   positionOpponentSeatsVisuals(opponents) {
     // Helper to hide seats that are not in use
