@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online UNO - Premium Card Game</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark-theme">
+    <!-- Background visual mesh -->
+    <div class="mesh-gradient"></div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="app-container">
+        
+        <!-- ==================================================== -->
+        <!-- SCREEN 1: AUTHENTICATION (LOGIN / REGISTER) -->
+        <!-- ==================================================== -->
+        <section id="screen-auth" class="app-screen active">
+            <div class="glass-card auth-card">
+                <div class="logo-container">
+                    <span class="logo-u">U</span>
+                    <span class="logo-n">N</span>
+                    <span class="logo-o">O</span>
+                    <span class="logo-tag">ONLINE</span>
+                </div>
+                
+                <h2 class="auth-title">Welcome Player</h2>
+                <p class="auth-subtitle">Login or register to track your wins and top the leaderboard!</p>
+
+                <div class="tab-buttons">
+                    <button id="btn-tab-login" class="tab-btn active">Login</button>
+                    <button id="btn-tab-register" class="tab-btn">Sign Up</button>
+                </div>
+
+                <form id="auth-form" autocomplete="off">
+                    <div class="input-group">
+                        <label for="auth-username">Username</label>
+                        <input type="text" id="auth-username" required placeholder="Enter username" minlength="3" maxlength="15">
+                    </div>
+                    <div class="input-group">
+                        <label for="auth-password">Password</label>
+                        <input type="password" id="auth-password" required placeholder="Enter password" minlength="4">
+                    </div>
+                    <button type="submit" id="btn-auth-submit" class="primary-btn glow-effect">Login to Play</button>
+                </form>
+
+                <div class="guest-divider">
+                    <span>OR</span>
+                </div>
+                
+                <button id="btn-guest-play" class="secondary-btn">Play as Guest (Offline/AI)</button>
+            </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- SCREEN 2: MAIN MENU DASHBOARD -->
+        <!-- ==================================================== -->
+        <section id="screen-menu" class="app-screen">
+            <header class="dashboard-header">
+                <div class="user-profile-badge">
+                    <div class="avatar-glow">
+                        <div class="avatar">👤</div>
+                    </div>
+                    <div class="user-info">
+                        <span class="welcome-text">Welcome back,</span>
+                        <span id="display-username" class="username-text">Guest</span>
+                    </div>
+                </div>
+
+                <div class="logo-mini">
+                    <span class="m-u">U</span><span class="m-n">N</span><span class="m-o">O</span>
+                </div>
+
+                <div class="header-actions">
+                    <button id="btn-logout" class="action-btn text-danger">Logout</button>
+                    <button id="btn-toggle-sound" class="action-btn" title="Toggle Sound">🔊</button>
+                </div>
+            </header>
+
+            <main class="dashboard-grid">
+                <!-- Left Menu Column -->
+                <div class="menu-choices-column">
+                    <div class="glass-card mode-card singleplayer-banner">
+                        <div class="mode-info">
+                            <h3>Practice Arena</h3>
+                            <p>Play offline against highly strategic AI players. Perfect your skills!</p>
+                            <div class="ai-difficulty-options">
+                                <label for="ai-count-select">Opponents:</label>
+                                <select id="ai-count-select">
+                                    <option value="1">1 AI Opponent</option>
+                                    <option value="2">2 AI Opponents</option>
+                                    <option value="3" selected>3 AI Opponents</option>
+                                </select>
+                            </div>
+                            <button id="btn-start-singleplayer" class="primary-btn glow-effect">Start VS AI Match</button>
+                        </div>
+                    </div>
+
+                    <div class="glass-card mode-card multiplayer-banner">
+                        <div class="mode-info">
+                            <h3>Global Multiplayer</h3>
+                            <p>Join an active lobby or create your own room to match with players around the world.</p>
+                            
+                            <div class="join-room-actions">
+                                <input type="text" id="custom-room-input" placeholder="ROOM CODE (E.G. ABCD)" maxlength="5" class="room-code-field">
+                                <button id="btn-join-room" class="secondary-btn">Join Room</button>
+                            </div>
+                            
+                            <button id="btn-create-lobby" class="primary-btn glow-effect">Create Private Lobby</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Leaderboard Column -->
+                <div class="dashboard-stats-column">
+                    <div class="glass-card stats-card">
+                        <div class="stats-header">
+                            <h3>🏆 High Score Leaderboard</h3>
+                        </div>
+                        <div class="stats-table-wrapper">
+                            <table id="leaderboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Player</th>
+                                        <th class="text-center">Wins</th>
+                                        <th class="text-right">Total Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leaderboard-body">
+                                    <tr>
+                                        <td colspan="4" class="text-center">Loading players...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="glass-card stats-card">
+                        <div class="stats-header">
+                            <h3>📜 Recent Matches</h3>
+                        </div>
+                        <div class="history-list-wrapper">
+                            <ul id="match-history-list" class="history-list">
+                                <li class="text-center">No match history yet.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- SCREEN 3: MULTIPLAYER LOBBY -->
+        <!-- ==================================================== -->
+        <section id="screen-lobby" class="app-screen">
+            <div class="lobby-grid">
+                <!-- Lobby Details Glass Card -->
+                <div class="glass-card lobby-details-card">
+                    <div class="lobby-header">
+                        <h2>Multiplayer Game Room</h2>
+                        <div class="room-code-badge">
+                            Room Code: <strong id="lobby-room-code">----</strong>
+                            <button id="btn-copy-code" class="icon-btn" title="Copy Code">📋</button>
+                        </div>
+                    </div>
+
+                    <div class="players-list-section">
+                        <h3>Players Joined (<span id="lobby-player-count">0</span>/4)</h3>
+                        <div id="lobby-players-grid" class="players-grid">
+                            <!-- Players elements dynamically loaded -->
+                        </div>
+                    </div>
+
+                    <div class="lobby-footer">
+                        <button id="btn-leave-lobby" class="secondary-btn">Leave Room</button>
+                        <button id="btn-lobby-start-game" class="primary-btn glow-effect disabled" disabled>Start Match</button>
+                    </div>
+                </div>
+
+                <!-- Lobby Chat Glass Card -->
+                <div class="glass-card lobby-chat-card">
+                    <h3>💬 Game Room Chat</h3>
+                    <div id="chat-messages" class="chat-messages-box">
+                        <div class="chat-system">Welcome to the lobby! Chat with other players here.</div>
+                    </div>
+                    <form id="chat-form" class="chat-input-row">
+                        <input type="text" id="chat-input" placeholder="Type a message..." maxlength="100" required>
+                        <button type="submit" class="chat-send-btn">Send</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================== -->
+        <!-- SCREEN 4: GAME BOARD (THE FELT ARENA) -->
+        <!-- ==================================================== -->
+        <section id="screen-game" class="app-screen">
+            <!-- Game Arena Board -->
+            <div class="game-board-felt">
+                
+                <!-- TOP HEADER -->
+                <div class="game-header-bar">
+                    <div class="game-room-indicator">
+                        <span id="game-mode-tag" class="mode-badge-offline">OFFLINE</span>
+                        <span id="game-room-code-display">Room Code: VS-AI</span>
+                    </div>
+
+                    <div class="game-feed-container">
+                        <div id="game-action-announcement" class="action-feed-item">Game started! Deal cards...</div>
+                    </div>
+
+                    <button id="btn-exit-game" class="secondary-btn exit-match-btn">Exit Match</button>
+                </div>
+
+                <!-- LIVE CARD COUNT STANDINGS -->
+                <div class="live-standings-card glass-card">
+                    <div class="standings-header">📋 Card Standings</div>
+                    <div id="live-standings-list" class="standings-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- SEAT LAYOUT (Dynamic Seats for Opponents) -->
+                <!-- Opponent Left (Seat 2) -->
+                <div id="seat-left" class="player-seat opponent-seat">
+                    <div class="seat-avatar-container">
+                        <div class="seat-avatar">🤖</div>
+                        <div class="card-count-bubble">7</div>
+                    </div>
+                    <div class="seat-name">Opponent Left</div>
+                    <div class="uno-bubble">UNO!</div>
+                </div>
+
+                <!-- Opponent Top (Seat 3) -->
+                <div id="seat-top" class="player-seat opponent-seat">
+                    <div class="seat-avatar-container">
+                        <div class="seat-avatar">🤖</div>
+                        <div class="card-count-bubble">7</div>
+                    </div>
+                    <div class="seat-name">Opponent Top</div>
+                    <div class="uno-bubble">UNO!</div>
+                </div>
+
+                <!-- Opponent Right (Seat 4) -->
+                <div id="seat-right" class="player-seat opponent-seat">
+                    <div class="seat-avatar-container">
+                        <div class="seat-avatar">🤖</div>
+                        <div class="card-count-bubble">7</div>
+                    </div>
+                    <div class="seat-name">Opponent Right</div>
+                    <div class="uno-bubble">UNO!</div>
+                </div>
+
+                <!-- CENTRAL ARENA (DRAW & DISCARD PILES) -->
+                <div class="center-play-arena">
+                    <!-- Turn indicator circular glow rings -->
+                    <div id="direction-indicator-ring" class="direction-ring clockwise">
+                        <span class="dir-arrow">➔</span>
+                        <span class="dir-arrow">➔</span>
+                        <span class="dir-arrow">➔</span>
+                        <span class="dir-arrow">➔</span>
+                    </div>
+
+                    <div class="piles-container">
+                        <!-- Draw Pile Deck -->
+                        <div id="deck-draw-pile" class="game-deck-card deck-face-down" title="Click to draw a card">
+                            <div class="deck-inner-card">
+                                <div class="uno-logo-skew">UNO</div>
+                            </div>
+                            <span class="deck-count-text" id="draw-pile-count">108</span>
+                        </div>
+
+                        <!-- Discard Pile -->
+                        <div id="deck-discard-pile" class="game-deck-card discard-pile-card">
+                            <!-- Top card loads dynamically here -->
+                            <div class="card-skeleton"></div>
+                        </div>
+                    </div>
+
+                    <!-- Active Play Color Backdrop -->
+                    <div class="active-color-indicator">
+                        Current Color: <span id="text-active-color">Red</span>
+                        <div id="dot-active-color" class="color-dot red"></div>
+                    </div>
+                </div>
+
+                <!-- BOTTOM PLAYER CONTROLS & HAND -->
+                <div class="player-hand-section">
+                    <div class="player-hud">
+                        <div class="hud-left">
+                            <div class="hud-avatar">👤</div>
+                            <div class="hud-info">
+                                <span class="hud-username" id="game-my-username">Player (You)</span>
+                                <span class="hud-status" id="game-my-status">Your Turn</span>
+                            </div>
+                        </div>
+
+                        <!-- Quick Action Row -->
+                        <div class="hud-actions">
+                            <button id="btn-game-draw" class="hud-btn primary-btn glow-effect">Draw Card</button>
+                            <button id="btn-game-pass" class="hud-btn secondary-btn disabled" disabled>Pass Turn</button>
+                            <button id="btn-game-uno" class="hud-btn uno-btn shine-effect">UNO!</button>
+                        </div>
+                    </div>
+
+                    <!-- Hand Cards Wrapper -->
+                    <div class="hand-scroller-wrapper">
+                        <div id="player-hand-container" class="hand-container">
+                            <!-- Cards populate dynamically here -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- POPUP: RADIAL COLOR CHOOSER -->
+            <div id="popup-color-chooser" class="fullscreen-overlay hidden">
+                <div class="radial-chooser-card glass-card">
+                    <h3>Choose Color</h3>
+                    <p>Select the color to change the game pile state to:</p>
+                    <div class="radial-grid">
+                        <button class="color-sector red" data-color="red">Red</button>
+                        <button class="color-sector yellow" data-color="yellow">Yellow</button>
+                        <button class="color-sector green" data-color="green">Green</button>
+                        <button class="color-sector blue" data-color="blue">Blue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POPUP: GAME OVER SPLASH MODAL -->
+            <div id="popup-game-over" class="fullscreen-overlay hidden">
+                <div class="game-over-card glass-card">
+                    <div class="win-trophy">🏆</div>
+                    <h2 id="game-over-title">Winner Declared!</h2>
+                    <p id="game-over-description">Winner Name has won the game!</p>
+                    
+                    <div class="game-over-stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-lbl">Points Awarded</span>
+                            <span class="stat-val" id="game-over-score">350</span>
+                        </div>
+                    </div>
+
+                    <button id="btn-game-over-close" class="primary-btn glow-effect">Return to Menu</button>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- Socket.io connection script -->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Frontend JS Assets -->
+    <script src="js/audio.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

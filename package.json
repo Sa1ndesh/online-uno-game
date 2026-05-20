@@ -1,0 +1,23 @@
+{
+  "name": "online-uno-game",
+  "version": "1.0.0",
+  "description": "Premium Online UNO Card Game with single-player smart AI, multiplayer socket sync, and glassmorphism design.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "uno",
+    "card-game",
+    "multiplayer",
+    "socket.io",
+    "express"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}

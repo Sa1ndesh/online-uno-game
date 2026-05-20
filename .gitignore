@@ -1,0 +1,9 @@
+node_modules/
+data/*.json
+.gemini/
+.DS_Store
+Thumbs.db
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
